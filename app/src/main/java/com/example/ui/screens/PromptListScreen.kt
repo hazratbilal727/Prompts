@@ -77,6 +77,7 @@ import com.example.data.model.SortOrder
 import com.example.ui.components.CategoryBadge
 import com.example.ui.components.CategoryFilterChip
 import com.example.ui.components.DeleteConfirmDialog
+import com.example.ui.theme.getPromptCardGradient
 import com.example.ui.util.DateFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -424,20 +425,21 @@ fun PromptItemCard(
     var showMenu by remember { mutableStateOf(false) }
     var copiedRecently by remember { mutableStateOf(false) }
 
+    val cardGradient = remember(prompt.id) {
+        getPromptCardGradient(prompt.id, opacity = 0.20f)
+    }
+
     Card(
         onClick = onClick,
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = Color.Transparent
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp, pressedElevation = 3.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         modifier = modifier
             .fillMaxWidth()
-            .border(
-                1.dp,
-                MaterialTheme.colorScheme.outline.copy(alpha = 0.2f),
-                RoundedCornerShape(16.dp)
-            )
+            .clip(RoundedCornerShape(16.dp))
+            .background(cardGradient)
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -536,8 +538,8 @@ fun PromptItemCard(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.45f))
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.50f))
                     .padding(10.dp)
             ) {
                 Text(
@@ -546,7 +548,7 @@ fun PromptItemCard(
                         fontFamily = FontFamily.SansSerif,
                         lineHeight = 18.sp
                     ),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = MaterialTheme.colorScheme.onSurface,
                     maxLines = previewLines,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -564,7 +566,7 @@ fun PromptItemCard(
                 Text(
                     text = "$wordCount words • ${prompt.content.length} chars",
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.outline
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 // Quick Copy Action
@@ -575,7 +577,7 @@ fun PromptItemCard(
                             onCopy()
                             copiedRecently = true
                         }
-                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.08f))
+                        .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.60f))
                         .padding(horizontal = 10.dp, vertical = 6.dp)
                         .testTag("copy_prompt_button_${prompt.id}"),
                     verticalAlignment = Alignment.CenterVertically

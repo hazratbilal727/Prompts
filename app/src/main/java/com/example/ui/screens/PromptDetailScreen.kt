@@ -55,6 +55,7 @@ import androidx.compose.ui.unit.sp
 import com.example.data.model.Prompt
 import com.example.ui.components.CategoryBadge
 import com.example.ui.components.DeleteConfirmDialog
+import com.example.ui.theme.getPromptCardGradient
 import com.example.ui.util.DateFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -235,16 +236,21 @@ fun PromptDetailScreen(
 
             Spacer(modifier = Modifier.height(14.dp))
 
+            val detailCardGradient = remember(prompt.id) {
+                getPromptCardGradient(prompt.id, opacity = 0.20f)
+            }
+
             // Timestamp Info Card
             Card(
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(14.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f)
                 ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
-                    modifier = Modifier.padding(12.dp),
+                    modifier = Modifier.padding(14.dp),
                     verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     Row(
@@ -301,14 +307,9 @@ fun PromptDetailScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(14.dp))
-                        .background(MaterialTheme.colorScheme.surface)
-                        .border(
-                            1.dp,
-                            MaterialTheme.colorScheme.outline.copy(alpha = 0.25f),
-                            RoundedCornerShape(14.dp)
-                        )
-                        .padding(16.dp)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(detailCardGradient)
+                        .padding(18.dp)
                 ) {
                     Text(
                         text = prompt.content,

@@ -71,6 +71,7 @@ import com.example.R
 import com.example.data.model.Prompt
 import com.example.data.model.SortOrder
 import com.example.data.model.UserAccount
+import com.example.ui.theme.getCardGradientByIndex
 import com.example.ui.util.DateFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -135,6 +136,11 @@ fun SettingsScreen(
             )
         }
     ) { innerPadding ->
+        val accountCardGradient = remember { getCardGradientByIndex(0, opacity = 0.20f) }
+        val preferencesCardGradient = remember { getCardGradientByIndex(1, opacity = 0.20f) }
+        val dataCardGradient = remember { getCardGradientByIndex(4, opacity = 0.20f) }
+        val aboutCardGradient = remember { getCardGradientByIndex(3, opacity = 0.20f) }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -152,9 +158,13 @@ fun SettingsScreen(
                 // Signed In State
                 Card(
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-                    modifier = Modifier.fillMaxWidth().testTag("google_account_card")
+                    colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(accountCardGradient)
+                        .testTag("google_account_card")
                 ) {
                     Column(
                         modifier = Modifier.padding(16.dp),
@@ -243,9 +253,13 @@ fun SettingsScreen(
                 // Not Signed In State
                 Card(
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-                    modifier = Modifier.fillMaxWidth().testTag("google_login_card")
+                    colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(accountCardGradient)
+                        .testTag("google_login_card")
                 ) {
                     Column(
                         modifier = Modifier.padding(18.dp),
@@ -256,7 +270,7 @@ fun SettingsScreen(
                                 modifier = Modifier
                                     .size(36.dp)
                                     .clip(CircleShape)
-                                    .background(MaterialTheme.colorScheme.surfaceVariant),
+                                    .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.7f)),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
@@ -287,14 +301,13 @@ fun SettingsScreen(
                             enabled = !isSigningIn,
                             shape = RoundedCornerShape(12.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                                containerColor = MaterialTheme.colorScheme.surface,
                                 contentColor = MaterialTheme.colorScheme.onSurface
                             ),
-                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 1.dp),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(50.dp)
-                                .border(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
                                 .testTag("google_sign_in_button")
                         ) {
                             if (isSigningIn) {
@@ -363,9 +376,12 @@ fun SettingsScreen(
 
             Card(
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-                modifier = Modifier.fillMaxWidth()
+                colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(preferencesCardGradient)
             ) {
                 Column(modifier = Modifier.padding(vertical = 4.dp)) {
                     // Default Category Setting
@@ -439,9 +455,12 @@ fun SettingsScreen(
 
             Card(
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-                modifier = Modifier.fillMaxWidth()
+                colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(dataCardGradient)
             ) {
                 Column(
                     modifier = Modifier.padding(16.dp),
@@ -505,9 +524,12 @@ fun SettingsScreen(
 
             Card(
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-                modifier = Modifier.fillMaxWidth()
+                colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(aboutCardGradient)
             ) {
                 Column(
                     modifier = Modifier.padding(16.dp),
